@@ -154,3 +154,51 @@ def solve(n, G, P):
 
     return res
 # Time comlexity -> O(n+m)
+
+
+""" 
+Given a tree of n nodes represented by the parent vector P (by convention the parent of the root node is the node itself) 
+and two tree nodes u and v, calculate the distance between u and v in the tree.
+"""
+def calcDistance(P, u, v):
+    root = None
+    dicU, dicV = dict(), dict()
+    countU, countV = 0, 0
+    flag = False
+    for i in range(len(P)):
+        if P[i] == i + 1:
+            root = i + 1
+            break
+    while True:
+        dicU[u] = countU
+        countU += 1
+        u = P[u - 1]
+        if u == root:
+            if not flag:
+                flag = True
+            else:
+                break
+    while True:
+        if v in dicU:
+            return dicU[v] + countV
+        dicV[v] = countV
+        countV += 1
+        v = P[v - 1]
+# Time comlexity -> O(n)
+        
+
+"""
+Given a tree of n nodes represented by the parent vector P (for convention the parent of the root node is the node itself) 
+and one of its nodes x, find the set of nodes of T present in the subtree rooted at x.
+"""
+def findSubtree(P, x):
+    res = set()
+    res.add(x)
+    prev, curr = None, 1
+    while prev != curr:
+        for i in range(len(P)):
+            if P[i] in res and i+1 not in res:
+                res.add(i+1)
+        prev = curr
+        curr = len(res)
+    return res
