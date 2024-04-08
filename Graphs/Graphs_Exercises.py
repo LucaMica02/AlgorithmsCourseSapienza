@@ -202,3 +202,36 @@ def findSubtree(P, x):
         prev = curr
         curr = len(res)
     return res
+
+
+'''
+The square graph of a directed graph G = (V,E) is a directed graph G2 = (V,E2)
+where E2 = {(u, v) | ∃ w ∈ V and (u, w) ∈ E and (w, v) ∈ E}.
+Describe an algorithm which, given the directed graph G, calculates the square graph G2
+'''
+def squareGraph(G):
+    mapping = dict()
+    for i in range(len(G)):
+        mapping[i] = set(G[i])
+        for j in G[i]:
+            mapping[i].update(set(G[j]))
+    for i in range(len(G)):
+        G[i] = list(mapping[i])
+    return G
+# Time comlexity -> O((n+m)^2)
+
+
+'''
+Given a graph G, describe an algorithm that orients its edges so as 
+to create a directed and acyclic G1 graph.
+'''
+def orientsGraph(G):
+    newG = []
+    for i in range(len(G)):
+        L = []
+        for j in G[i]:
+            if j > i:
+                L.append(j)
+        newG.append(L)
+    return newG
+# Time comlexity -> O(n+m)
