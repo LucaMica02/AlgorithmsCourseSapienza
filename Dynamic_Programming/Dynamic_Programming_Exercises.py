@@ -149,3 +149,83 @@ def maxSum2(A):
         T[i] = max(T[i-1], T[i-3] + A[i])
     return T[n-1]
 # Time complexity -> O(n)
+
+
+'''
+We have a backpack with capacity c and n objects, each with a weight p and a value v.
+We want to know the maximum value that can be placed in the backpack
+'''
+def backpack(P, V, c):
+    n = len(P)
+    T = [ [0] * (c+1) for _ in range(n + 1) ]
+    for i in range(1, n+1):
+        for j in range(1, c+1):
+            if j < P[i - 1]: #I can't insert the object
+                T[i][j] = T[i - 1][j]
+            else: #I choose the max beetwen if insert or not the object
+                T[i][j] = max(T[i - 1][j], V[i - 1] + T[i - 1][j - P[i - 1]])
+    return T[n][c]
+# Time complexity -> O(n*c)
+
+
+'''
+Give two sequences of symbols X,Y we want to find a subsequence 
+common and having maximum length.
+'''
+def findSubSeq(X,Y):
+    n,m = len(X), len(Y)
+    T = [ [0] * (m+ 1) for _ in range(n + 1)]
+    for i in range(1, n+1):
+        for j in range(1, m+1):
+            if X[i] == Y[j]: #longest subsequence without that symbol + 1
+                T[i][j] = T[i - 1][j - 1] + 1
+            else: #the maximum between the two subsequences
+                T[i][j] = max(T[i][j - 1], T[i - 1][j])
+    return T[n][m]
+# Time complexity -> O(n * m)
+
+
+'''
+Given a positive integer n, count the number of ternary strings long n 
+that contain neither substring '02' nor substring '20' 
+'''
+def ternaryStrings(n):
+    #case base is the empty string
+    if n == 0:
+        return 1
+    T = [ [0,0,0] for _ in range(n + 1) ]
+    T[0], T[1] = [0,0,0], [1,1,1]
+    #IDEA -> a string can termine with:
+    # - 0 can append 0 or 1 
+    # - 1 can append 0 or 1 or 2
+    # - 2 can append 1 or 2
+    for i in range(2, n + 1):
+        s = sum(T[i - 1])
+        T[i][0] = s - T[i - 1][2]
+        T[i][1] = s
+        T[i][2] = s - T[i - 1][0]
+    return sum(T[n])
+# Time complexity -> O(n)
+
+
+'''
+Given an integer n, find the number of quaternary strings long n 
+that can be obtained by making sure that in strings not two adjacent 
+odd digits never appear.
+'''
+def quaternaryStrings1(n):
+    #case base is the empty string
+    if n == 0:
+        return 1
+    T = [ [0,0,0,0] for _ in range(n + 1) ]
+    T[0], T[1] = [0,0,0,0], [1,1,1,1]
+    #IDEA -> a string can termine with:
+    # - even number (0 or 2) and I can append 0 or 1 or 2 or 3     
+    # - odd number (1 or 3) and I can append 0 or 2            
+    for i in range(2, n + 1):
+        even = sum(T[i - 1])
+        odd = T[i - 1][0] + T[i - 1][2]
+        T[i][0] = T[i][2] = even
+        T[i][1] = T[i][3] = odd
+    return sum(T[n])
+# Time complexity -> O(n)
