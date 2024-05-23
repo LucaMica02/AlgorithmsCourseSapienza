@@ -229,3 +229,62 @@ def quaternaryStrings1(n):
         T[i][1] = T[i][3] = odd
     return sum(T[n])
 # Time complexity -> O(n)
+
+
+'''
+Given a list A with a range of n coin denominations and an amount k from
+achieve find the minimum number of coins needed to get
+this amount. If you can't get that amount return -1.
+'''
+#T[i] -> min number of coins to reach the value i or inf if is impossible
+def minCoinsToAmount(A, k):
+    T = [float('inf')] * (k + 1)
+    for i in range(1, k + 1):
+        minVal = float('inf')
+        for coin in A:
+            val = i - coin
+            if val == 0:
+                minVal = 1
+            elif val > 0:
+                if T[val] != float('inf'):
+                    minVal = min(minVal, T[val] + 1)
+        T[i] = minVal
+
+    if T[k] == float('inf'):
+        return -1
+    return T[k]
+#Time Complexity -> O(n*k)
+
+
+'''
+The display of a mobile phone looks like this:
+|1|2|3|
+|4|5|6|
+|7|8|9|
+|*|0|#|
+We are looking for a particular telephone number and we know that:
+- the number is made up of n digits
+- does not contain adjacent identical digits
+- when dialing the number on the keypad you only need to move between adjacent keys
+horizontally or vertically
+-> Design an algorithm that, given n, returns the number of possible combinations 
+for the telephone number to search for
+'''
+def mobilePhone(n):
+    #possible move
+    memo = {0:[8], 1:[2,4], 2:[1,3,5], 3:[2,6], 4:[1,5,7], 5:[2,4,6,8], 6:[3,5,9], 7:[4,8], 8:[5,7,9,0], 9:[6,8]}
+    res = 0
+    #for every number which I can start 
+    for i in range(10):
+        T = [0]*10
+        T[i] = 1
+        for j in range(2, n+1):
+            T1 = [0]*10
+            for k in range(10):
+                if T[k] != 0:
+                    for z in memo[k]:
+                        T1[z] += T[k]
+            T = T1
+        res += sum(T)
+    return res
+#Time complexity -> O(n)

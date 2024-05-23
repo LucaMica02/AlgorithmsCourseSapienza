@@ -100,4 +100,62 @@ def permutations(n):
     for i in range(1, n+1):
         mySet.add(i)
     help([], mySet, n, taken)
+#Time complexity -> O(n^2 * S(n)) where S(n) is the number of permutations to print
+
+
+'''
+Given n,k integers such that k <= n print all the permutations of the first n integers
+in which there are at least k fix points.
+A fix point is an item i that appears in the position i of the permutation.
+'''
+def permutationsFixPoints2(n, k):
+
+    def help(curr, alfa, n, k, taken, fixPoints):
+        if len(curr) == n:
+            print(curr)
+            return
+        poxFixPoints = 0
+        for i in alfa:
+            if taken[int(i)] == 0 and int(i) >= len(curr):
+                poxFixPoints += 1
+        if fixPoints + poxFixPoints >= k:
+            for i in range(n):
+                if taken[i] == 0:
+                    taken[i] = 1
+                    if len(curr) == i:
+                            help(curr + alfa[i], alfa, n, k, taken, fixPoints+1)
+                    else:
+                            help(curr + alfa[i], alfa, n, k, taken, fixPoints)
+                    taken[i] = 0
+    
+    taken = [0] * n
+    help('', [str(i) for i in range(n)], n, k, taken, 0)
+#Time complexity -> O(n^2 * S(n)) where S(n) is the number of permutations to print
+
+
+'''
+We have a matrix of integers of size n * n. 
+A descent on this matrix is a sequence of n matrix cells with the following constraints:
+- the cells belong to different rows of the matrix
+- the first cell belongs to the first row of the matrix
+- every other cell is adjacent (vertically or diagonally) to the cell that it 
+precedes
+-> Design an algorithm that, given the matrix prints all possible descents by M.
+'''
+def matrixDescents(matrix):
+
+    def BK(matrix, i, j, n, curr):
+        if i != (n - 1):
+            BK(matrix, i+1, j, n, curr + [matrix[i+1][j]])
+            if j != (n - 1):
+                BK(matrix, i+1, j + 1, n, curr + [matrix[i+1][j+1]])
+            if j != 0:
+                BK(matrix, i+1, j - 1, n, curr + [matrix[i+1][j-1]])
+        else:
+            print(curr)
+
+    n = len(matrix)
+    for j in range(n):
+        BK(matrix, 0, j, n, [matrix[0][j]])
+    return
 #Time complexity -> O(n^2 * S(n)) where S(n) is the number of matrix to print
