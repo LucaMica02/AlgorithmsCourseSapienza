@@ -288,3 +288,18 @@ def mobilePhone(n):
         res += sum(T)
     return res
 #Time complexity -> O(n)
+
+
+'''
+Given n, return the number of decimal sequences of length n 
+in which no adjacent even digits appear
+'''
+def noEvenDigitsAdjacent(n):
+    # set of digits: {0,1,2,3,4,5,6,7,8,9}
+    even = odd = 5
+    for i in range(2, n + 1):
+        # for every sequences of length n-1 I can append every odd number
+        # only for the sequences that end with odd number I can append every even number
+        even, odd = 5 * odd, 5 * (even + odd)
+    return even + odd
+#Time complexity -> O(n)

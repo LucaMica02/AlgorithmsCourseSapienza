@@ -158,4 +158,21 @@ def matrixDescents(matrix):
     for j in range(n):
         BK(matrix, 0, j, n, [matrix[0][j]])
     return
-#Time complexity -> O(n^2 * S(n)) where S(n) is the number of matrix to print
+#Time complexity -> O(n * S(n)) where S(n) is the number of matrix to print
+
+
+'''
+Given n, print all ternary sequences (0,1,2) in which no adjacent even digits appear
+'''
+def ternarySeq(n):
+    
+    def BK(n, i, curr, last):
+        if i == n:
+            print(curr)
+            return 
+        for j in range(3):
+            if j == 1 or last == 1:
+                BK(n, i+1, curr + str(j), j)
+    
+    BK(n, 0, '', 1)
+#Time complexity -> O(n * S(n)) where S(n) is the number of sequences to print
