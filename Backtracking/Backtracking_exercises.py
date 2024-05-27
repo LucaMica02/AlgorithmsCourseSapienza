@@ -176,3 +176,35 @@ def ternarySeq(n):
     
     BK(n, 0, '', 1)
 #Time complexity -> O(n * S(n)) where S(n) is the number of sequences to print
+
+
+'''
+Given n prints all binary n * n square matrices, where the number of 0s 
+in each column is less than or equal to the number of 1s in the column.
+'''
+def matrixLessZeros(n):
+
+    def BK(matrix, i, j, n, count):
+        if i == n:
+            for row in matrix:
+                print(row)
+            print()
+            return
+        if (count[j] + 1) <= (n // 2):
+            matrix[i][j] = 0
+            count[j] += 1
+            if j == (n - 1):
+                BK(matrix, i+1, 0, n, count)
+            else:
+                BK(matrix, i, j+1, n, count)
+            count[j] -= 1
+        matrix[i][j] = 1
+        if j == (n - 1):
+            BK(matrix, i+1, 0, n, count)
+        else:
+            BK(matrix, i, j+1, n, count)
+
+    matrix = [[-1]*(n) for _ in range(n)]
+    count = [0] * n
+    BK(matrix, 0, 0, n, count)
+#Time complexity -> O(n^2 * S(n)) where S(n) is the number of matrix to print

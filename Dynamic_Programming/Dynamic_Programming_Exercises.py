@@ -303,3 +303,24 @@ def noEvenDigitsAdjacent(n):
         even, odd = 5 * odd, 5 * (even + odd)
     return even + odd
 #Time complexity -> O(n)
+
+
+'''
+Given n >= 2 we want to count the number of ways in which it is possible to 
+obtain n starting from the number 2 and being able to carry out
+the only 3 operations of increment by 1, product by 2 and product by 3.
+'''
+def waysToGetN(n):
+    T = [0] * (n + 1)
+    T[2] = 1
+    for i in range(3, n + 1):
+        # We can always add 1 from the sequences that we can reach with n-1
+        T[i] += T[i - 1]
+        # If n is even we can also multiply by 2 the sequences at n/2
+        if i % 2 == 0:
+            T[i] += T[i // 2]
+        # If n is divisible by 3 we can also multiply by 3 the sequences at n/3
+        if i % 3 == 0:
+            T[i] += T[i // 3]
+    return T[n]
+# Time Complexity -> O(n)
