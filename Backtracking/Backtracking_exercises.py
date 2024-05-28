@@ -208,3 +208,33 @@ def matrixLessZeros(n):
     count = [0] * n
     BK(matrix, 0, 0, n, count)
 #Time complexity -> O(n^2 * S(n)) where S(n) is the number of matrix to print
+
+
+'''
+Given n print all the binary strings of length 2*n such that the number of 1s
+in the first half is equal to the number of 1s in the second half
+'''
+def binaryStrings(n):
+
+    def BK(n, i, curr, t1, t2):
+        if i == n:
+            print(curr)
+            return
+        empty = n - i
+        z1 = n//2 - t1 #number of 0s in the first half
+        z2 = n//2 - empty - t2 #number of 0s in the second half
+        if i >= n//2:
+            #if I have enough 0s
+            if z2 + empty - 1 >= z1:
+                BK(n, i+1, curr + '1', t1, t2+1)
+            #if I have enough 1s
+            if t2 + empty - 1 >= t1:
+                BK(n, i+1, curr + '0', t1, t2)
+        #in the first half I want all the possible combination
+        else:
+            BK(n, i+1, curr + '0', t1, t2)
+            BK(n, i+1, curr + '1', t1+1, t2)
+        
+    
+    BK(2 * n, 0, '', 0, 0)
+#Time complexity -> O(n * S(n)) where S(n) is the number of strings to print

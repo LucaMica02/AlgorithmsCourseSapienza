@@ -324,3 +324,22 @@ def waysToGetN(n):
             T[i] += T[i // 3]
     return T[n]
 # Time Complexity -> O(n)
+
+
+'''
+Given two integers k, n with 1 <= k <= n find how many different ways
+there are to partition the first n positive integers in k subsets
+'''
+def partitions(n, k):
+    T = [ [0]*(n + 1) for _ in range(k + 1) ]
+    # base case 0 set with 0 number
+    T[0][0] = 1
+    # for every number of sets
+    for i in range(1, k+1):
+        # for every number of integers
+        for j in range(1, n+1):
+            # we can add the new number at every existing subset
+            T[i][j] += i * T[i][j - 1] 
+            # we can create a new subset with the new number 
+            T[i][j] += T[i - 1][j - 1]
+    return T[k][n]
