@@ -235,6 +235,24 @@ def binaryStrings(n):
             BK(n, i+1, curr + '0', t1, t2)
             BK(n, i+1, curr + '1', t1+1, t2)
         
-    
     BK(2 * n, 0, '', 0, 0)
+#Time complexity -> O(n * S(n)) where S(n) is the number of strings to print
+
+
+'''
+Given n print all the sequences of length n with the alphabet = {'a', 'b', 'c'}
+where the symbol 'a' is always followed by two symbols 'b'
+'''
+def sequencesABC(n):
+
+    def BK(n, i, curr):
+        if i == n:
+            print(curr)
+            return
+        if n - i > 2:
+            BK(n, i+3, curr + 'abb')
+        BK(n, i+1, curr + 'b')
+        BK(n, i+1, curr + 'c')
+
+    BK(n, 0, '')
 #Time complexity -> O(n * S(n)) where S(n) is the number of strings to print

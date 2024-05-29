@@ -343,3 +343,26 @@ def partitions(n, k):
             # we can create a new subset with the new number 
             T[i][j] += T[i - 1][j - 1]
     return T[k][n]
+
+
+'''
+In a two-player game a player has a winning strategy if he can win independently of the 
+moves made by his opponent. There are n tokens on a table. 
+Two players can take turns withdrawing from the table 1, 3 or 4 tokens. 
+The first player who finds himself without the possibility of withdrawing tokens win.
+Given the number n of tokens return True if the player who makes the first move has
+a winning strategy
+'''
+def winningStrategy(n):
+    T = [False] * (n+1)
+    T[0] = True
+    # Being able to reach a cell that contain False mean give to the opponent a
+    # situation in which he can't have a winning strategy, so we can have it
+    for i in range(1, n+1):
+        if not T[i - 1]:
+            T[i] = True
+        elif i >= 3 and not T[i - 3]:
+            T[i] = True
+        elif i >= 4 and not T[i - 4]:
+            T[i] = True
+    return T[n]
