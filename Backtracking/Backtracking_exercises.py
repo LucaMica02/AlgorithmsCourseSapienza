@@ -256,3 +256,28 @@ def sequencesABC(n):
 
     BK(n, 0, '')
 #Time complexity -> O(n * S(n)) where S(n) is the number of strings to print
+
+
+'''
+Given n print all the ternary sequences in which three consecutive
+elements never appear such that the sum is an even number
+'''
+def ternarySeqNoEvenSum(n):
+
+    def BK(i, n, curr):
+        if i == n:
+            print(curr)
+            return
+        if i >= 2:
+            tot = int(curr[-1]) + int(curr[-2])
+            if tot % 2 == 0:
+                BK(i+1, n, curr + '1')
+            else:
+                BK(i+1, n, curr + '0')
+                BK(i+1, n, curr + '2')
+        else:
+            for k in ['0','1','2']:
+                BK(i+1, n, curr + k)
+    
+    BK(0, n, '')
+#Time complexity -> O(n * S(n)) where S(n) is the number of sequences to print
