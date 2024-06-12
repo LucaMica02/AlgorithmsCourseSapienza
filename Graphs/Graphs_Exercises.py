@@ -235,3 +235,128 @@ def orientsGraph(G):
         newG.append(L)
     return newG
 # Time comlexity -> O(n+m)
+
+
+'''
+A node n in a directed graph G, is principal if every other vertex in G
+it can be reached with a direct path starting from n.
+Given G and n return true if and only if n is a principal node.
+'''
+def pricipalNode(G, n):
+    
+    def DFS(G, n, V):
+        V[n] = 1
+        for i in G[n]:
+            if V[i] == 0:
+                DFS(G, i, V)
+
+    V = [0] * len(G)
+    DFS(G, n, V)
+    if sum(V) == len(V):
+        return True
+    return False
+# Time comlexity -> O(n+m)
+
+''' Given G return true if and only if G contain a principal node. '''
+def containPrincipalNode(G):
+
+    def DFS(G, n, V):
+        V[n] = 1
+        for i in G[n]:
+            if V[i] == 0:
+                DFS(G, i, V)
+
+    V = [0] * len(G)
+    last = None
+    # If the tree produced by a DFS on a node don't cover all the node in the graph
+    # that node and all the nodes present in that tree aren't principal node
+    for i in range(len(G)):
+        if V[i] == 0:
+            last = i
+            DFS(G, i, V)
+    # The last node that i called in the DFS maybe can be a principal node
+    return pricipalNode(G, last)
+# Time comlexity -> O(n+m)
+
+
+'''
+Given an undirected and connected graph G and two its
+nodes u and v, find the nodes that have the same distance from u and v
+'''
+def sameDistance(G, u, v):
+    
+    def BFS(G, n):
+        D = [float('inf')] * len(G) 
+        D[n] = 0
+        i = 0
+        q = [n]
+        while i < len(q):
+            node = q[i]
+            i += 1
+            for j in G[node]:
+                if D[j] == float('inf'):
+                    q.append(j)
+                    D[j] = D[node] + 1
+        return D
+    
+    Du = BFS(G, u)
+    Dv = BFS(G, v)
+    res = set()
+    for i in range(len(G)):
+        if Du[i] == Dv[i]:
+            res.add(i)
+    return res
+# Time comlexity -> O(n+m)
+
+
+'''
+Given a graph G and two subsets V1 and V2 of its nodes find their minimum distance, 
+if the subsets are not disjoint returns 0
+'''
+def minDistSubset(G, V1, V2):
+    D = [float('inf')] * len(G)
+    q = []
+    i = 0
+    for v1 in V1:
+        D[v1] = 0
+        q.append(v1)
+    while i < len(q):
+        node = q[i]
+        if node in V2:
+            return D[node]
+        for j in G[node]:
+            if D[j] == float('inf'):
+                D[j] = D[node] + 1
+                q.append(j)
+    return float('inf')
+# Time comlexity -> O(n+m)
+
+
+'''
+Given a graph G, a node n, a distance vector related to a BFS from n and
+an edge (u,v) of G, returns true if and only if removing the edge 
+(u,v) does not change the distances from n
+'''
+def removeEdge(G, D, n, edge):
+    u, v = edge
+    G[u].remove(v)
+    G[v].remove(u)
+
+    def BFS(G, n):
+        D = [float('inf')] * len(G) 
+        D[n] = 0
+        i = 0
+        q = [n]
+        while i < len(q):
+            node = q[i]
+            i += 1
+            for j in G[node]:
+                if D[j] == float('inf'):
+                    q.append(j)
+                    D[j] = D[node] + 1
+        return D
+    
+    D1 = BFS(G, n)
+    if D1 == D:
+        return True
+    return False
