@@ -317,4 +317,4 @@ def kruskal(G):
             union(cx, cy, C)
 
     return tree
-# Time complexity -> O(m*lgn)
+# Time complexity -> O(m*logn)

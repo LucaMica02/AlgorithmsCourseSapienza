@@ -360,3 +360,32 @@ def removeEdge(G, D, n, edge):
     if D1 == D:
         return True
     return False
+# Time comlexity -> O(n+m)
+
+
+'''
+Given a Tree of n nodes, with root 0, and memorized like a directed graph,
+find the number of level in which even number of nodes appear.
+'''
+def solve(G):
+    D = [-1] * len(G)
+    Q = [0]
+    i = 0
+    D[0] = 0
+    while i < len(Q):
+        node = Q[i]
+        i += 1
+        for j in G[node]:
+            if D[j] == -1:
+                D[j] = D[node] + 1
+                Q.append(j)
+    M = max(D)
+    res = 0
+    count = [0]*(M+1)
+    for i in D:
+        count[i] += 1
+    for i in count:
+        if i % 2 == 0:
+            res += 1
+    return res
+# Time comlexity -> O(n)
