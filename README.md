@@ -13,8 +13,8 @@ The **Algorithm Design** course covers a range of fundamental algorithms and pro
 - **Greedy Algorithms**: An approach where a problem is solved by choosing the best option at each step with the hope of finding the global optimum.
 
 ## Prerequisites 🛠️
-Programming Language: The exercises are implemented in Python, so a basic understanding of Python is required.
-Mathematical Foundations: A good knowledge of data structures will be helpful in understanding the algorithms.
+- **Programming Language:** The exercises are implemented in Python, so a basic understanding of Python is required.
+- **Mathematical Foundations:** A good knowledge of data structures will be helpful in understanding the algorithms.
 
 ## Contributing 🤝
 Contributions are welcome! If you have additional exercises, optimizations, or alternative implementations, feel free to submit a pull request or open an issue.
