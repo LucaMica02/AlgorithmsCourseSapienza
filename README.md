@@ -1,5 +1,7 @@
 # AlgorithmsCourseSapienza 📚
 
+![Python Version](https://img.shields.io/badge/Python-3.9%2B-blue)
+
 This repository contains exercises and algorithm implementations from the **Algorithm Design** course, part of the Computer Science Bachelor's degree at Sapienza University of Rome. The focus is on understanding and applying various algorithmic techniques to solve complex problems.
 
 ## Course Overview 🏛️
